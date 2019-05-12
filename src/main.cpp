@@ -11,8 +11,6 @@
 int address_check = 0;
 
 void setup() {
-
-
   // put your setup code here, to run once:
   Serial.begin(115200);
   Serial.println();
@@ -35,10 +33,6 @@ void loop() {
     // We are connected to the Wifi
     HTTPClient http;
 
-    String address_hue = String("http://" + String(ip_hue) + "/api/" + String(dev_id_hue) + "/lights");
-    String address_pi = String("http://" + String(ip_pi) + "/api/" + String(dev_id_pi) + "/lights");
-
-    String my_addresses[NB_HUE_DEVICES];
     my_addresses[0] = address_hue;
     my_addresses[1] = address_pi;
 
@@ -52,7 +46,6 @@ void loop() {
 
       String response = http.getString();
 
-      // const size_t capacity = 12*JSON_ARRAY_SIZE(2) + 3*JSON_ARRAY_SIZE(3) + 16*JSON_OBJECT_SIZE(2) + 4*JSON_OBJECT_SIZE(3) + 5*JSON_OBJECT_SIZE(4) + 4*JSON_OBJECT_SIZE(5) + 3*JSON_OBJECT_SIZE(11) + 4*JSON_OBJECT_SIZE(13) + 2610;
       const size_t capacity = response.length() * 1.73;
       DynamicJsonDocument doc(capacity);
 

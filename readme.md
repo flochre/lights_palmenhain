@@ -9,3 +9,9 @@ https://techtutorialsx.com/2016/07/17/esp8266-http-get-requests/
 
 JSON parser
 https://arduinojson.org/v5/example/parser/
+
+## Notes
+This is a first test of the system.
+
+We need to think on an Architecture how we want to design and use the code before going farther
+- Using ini file for the configuration?
