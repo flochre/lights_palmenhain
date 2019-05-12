@@ -4,14 +4,8 @@
 #include <ESP8266WiFi.h>
 
 #include "config.h"
+#include "requests.h"
 
-// void get_request(HTTPClient my_http, String my_request){
-//   // http.begin("http:/192.168.1.2/api/fRkcEAkfYx6CkGjl0FDmTzttW-sD9LPFyX9syBRj/lights/");
-//   my_http.begin(my_request);
-//   my_http.addHeader("Content-Type", "text/plain");
-//
-//   //return my_http;
-// }
 
 void setup() {
   // put your setup code here, to run once:
@@ -32,37 +26,37 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   if(WiFi.status()== WL_CONNECTED){
+    // We are connected to the Wifi
 
-   HTTPClient http;
+    HTTPClient http;
 
-   // http = get_request(http, "http:/192.168.1.2/api/fRkcEAkfYx6CkGjl0FDmTzttW-sD9LPFyX9syBRj/lights/");
-   http.begin("http://192.168.1.2/api/fRkcEAkfYx6CkGjl0FDmTzttW-sD9LPFyX9syBRj/lights/4/state");
-   http.addHeader("Content-Type", "application/json");
+    String address_hue = String("http://" + String(ip_hue) + "/api/" + String(dev_id_hue) + "/lights");
+    String address_pi = String("http://" + String(ip_pi) + "/api/" + String(dev_id_pi) + "/lights");
+    int httpResponseCode = get_request(&http, address_pi);
 
-   String data = "{\"on\":true}";
-   int httpResponseCode = http.sendRequest("PUT", data.c_str());
+   // String data = "{\"on\":true}";
+   // int httpResponseCode = http.sendRequest("PUT", data.c_str());
 
-   if(httpResponseCode>0){
+    if(httpResponseCode>0){
 
-    String response = http.getString();
+      String response = http.getString();
 
-    Serial.println(httpResponseCode);
-    Serial.println(response);
+      Serial.println(httpResponseCode);
+      Serial.println(response);
 
-   }else{
+    } else {
 
-    Serial.print("Error on sending PUT Request: ");
-    Serial.println(httpResponseCode);
+      Serial.print("Error on sending PUT Request: ");
+      Serial.println(httpResponseCode);
 
-   }
+    }
 
-   http.end();
+    http.end();
 
- }else{
+  } else {
     Serial.println("Error in WiFi connection");
- }
+  }
 
   delay(10000);
 }
